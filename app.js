@@ -25,15 +25,30 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
-// testing if ejs is working
-app.get('/', (req, res) => {
-    res.render('home')
-})
+app.use(express.urlencoded({ extended: true }))
 
-// to create a new campground
+// a list of all campgrounds
 app.get('/campgrounds', async (req, res) => {
     const campgrounds = await Campground.find({});
     res.render('campgrounds/index', { campgrounds });
+})
+
+// form for adding new campgrounds
+app.get('/campgrounds/new', (req, res) => {
+    res.render('campgrounds/new');
+})
+
+// post data for the added new campground
+app.post('/campgrounds', async (req, res) => {
+    const campground = new Campground(req.body.campground);
+    await campground.save();
+    res.redirect(`campgrounds/${campground._id}`);
+})
+
+// show specific camp ground
+app.get('/campgrounds/:id', async (req, res) => {
+    const campground = await Campground.findById(req.params.id)
+    res.render('campgrounds/show', { campground });
 })
 
 // open express on port 3000
