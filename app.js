@@ -31,10 +31,9 @@ app.get('/', (req, res) => {
 })
 
 // to create a new campground
-app.get('/makecampground', async (req, res) => {
-    const camp = new Campground({ title: 'Backyard', description: 'cheap camping!' });
-    await camp.save();
-    res.send(camp);
+app.get('/campgrounds', async (req, res) => {
+    const campgrounds = await Campground.find({});
+    res.render('campgrounds/index', { campgrounds });
 })
 
 // open express on port 3000

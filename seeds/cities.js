@@ -1,3 +1,4 @@
+// file that contains 1000 cities' data
 module.exports = [
     {
         city: "New York",

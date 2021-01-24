@@ -18,8 +18,10 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
+// function to pick a random item from the array
 const sample = array => array[Math.floor(Math.random() * array.length)];
 
+// create 50 randomized campgrounds
 const seedDB = async () => {
     await Campground.deleteMany({});
     for (let i = 0; i < 50; i++) {
@@ -32,6 +34,7 @@ const seedDB = async () => {
     }
 }
 
+// close database connection after running seedDB
 seedDB().then(() => {
     mongoose.connection.close();
 })
