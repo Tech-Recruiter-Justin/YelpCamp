@@ -45,10 +45,16 @@ app.post('/campgrounds', async (req, res) => {
     res.redirect(`campgrounds/${campground._id}`);
 })
 
-// show specific camp ground
+// show specific campground
 app.get('/campgrounds/:id', async (req, res) => {
     const campground = await Campground.findById(req.params.id)
     res.render('campgrounds/show', { campground });
+})
+
+// edit a campground
+app.get('/campgrounds/:id/edit', async(req, res) => {
+    const campground = await Campground.findById(req.params.id)
+    res.render('campgrounds/edit', { campground });
 })
 
 // open express on port 3000
